@@ -1,0 +1,10 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../hooks/useAuth.js";
+
+export default function Login() {
+  const { handleLogin, loading } = useAuth(); const navigate = useNavigate();
+  const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [error, setError] = useState("");
+  async function submit(event) { event.preventDefault(); setError(""); try { await handleLogin({ email, password }); navigate("/"); } catch (err) { setError(err.message); } }
+  return <div className="login-page"><aside className="login-aside"><a className="brand" href="/"><span className="brand-mark">p</span><span>pathfinder<span className="brand-dot">.</span></span></a><div className="login-aside-content"><div className="eyebrow"><span/> A CLEARER WAY FORWARD</div><h1>Your next chapter<br/>starts with <em>clarity.</em></h1><p>Understand your strengths. Find your next step. Show up ready for what comes next.</p></div><span className="login-aside-foot">Made for the work you want to do.</span></aside><main className="auth-side"><section className="form-container"><Link className="auth-back" to="/">← Back to Pathfinder</Link><h1>Welcome back</h1><p>Pick up right where your next move begins.</p>{error && <div className="auth-error" role="alert">{error}</div>}<form onSubmit={submit}><div className="input-group"><label htmlFor="email">Email address</label><input id="email" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} autoComplete="email" placeholder="you@example.com" required/></div><div className="input-group"><label htmlFor="password">Password</label><input id="password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} autoComplete="current-password" placeholder="Your password" required/></div><button className="primary-button auth-submit" disabled={loading}>{loading ? "Signing in…" : "Sign in →"}</button></form><p>New to Pathfinder? <Link to="/register">Create an account</Link></p></section></main></div>;
+}

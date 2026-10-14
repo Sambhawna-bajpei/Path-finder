@@ -1,0 +1,244 @@
+.auth-loading{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7b897e;font-size:12px}.auth-loading .brand-mark{width:42px;height:42px;font-size:26px}.gate-actions{display:grid;gap:15px;margin-top:24px}.gate-actions a{text-align:center}.secondary-auth{font-size:10px;color:#68816c!important}.nav-link.locked{opacity:.48;cursor:not-allowed}.nav-lock{margin-left:auto;font-size:12px}.upload-box.file-added{border-style:solid;border-color:#cbdacc;background:#f7faf6}.paste-details{margin-top:10px;color:#718174;font-size:9px}.paste-details summary{cursor:pointer}.paste-details .job-input{margin-top:9px}.job-upload{margin-bottom:1px}.stat-row button:disabled{opacity:.4;cursor:not-allowed}
+
+/* Readable type scale and fluid layouts */
+:root { font-size: 16px; }
+body { min-width: 320px; }
+.nav-link { font-size: 14px; }
+.workspace-label,.step-label { font-size: 11px; }
+.plan-card strong { font-size: 14px; }
+.plan-card p { font-size: 13px; }
+.plan-card small,.user-chip small,.breadcrumb,.quiet-link { font-size: 12px; }
+.user-chip b { font-size: 13px; }
+.top-cta { font-size: 12px; }
+.welcome-copy,.page-heading>p { font-size: 15px; }
+.section-top h2 { font-size: 19px; }
+.section-top p,.card-description { font-size: 14px; }
+.field-label { font-size: 12px; }
+.field-label span { font-size: 11px; }
+.upload-box { min-height: 68px; height: auto; }
+.upload-box b { font-size: 14px; }
+.upload-box small { font-size: 12px; line-height: 1.45; }
+.job-input { font-size: 14px; }
+.privacy-note,.notice { font-size: 12px; }
+.primary-button { font-size: 13px; }
+.score-block strong { font-size: 14px; }
+.score-block p,.stat-row small,.snapshot-bottom { font-size: 12px; }
+.stat-row b { font-size: 13px; }
+.stat-row button,.text-button { font-size: 12px; }
+.bottom-prompt b { font-size: 14px; }
+.bottom-prompt p { font-size: 12px; }
+.bottom-prompt button { font-size: 12px; }
+.site-footer { font-size: 11px; }
+.summary-copy h2 { font-size: 20px; }
+.summary-copy p { font-size: 14px; }
+.summary-tag { font-size: 11px; }
+.count-pill,.skill-tag { font-size: 12px; }
+.empty-hint { font-size: 13px; }
+.insight-banner b { font-size: 13px; }
+.insight-banner p,.insight-banner button { font-size: 12px; }
+.interview-hero h2 { font-size: 19px; }
+.interview-hero p { font-size: 13px; }
+.question-count small { font-size: 11px; }
+.question-content h3 { font-size: 16px; line-height: 1.5; }
+.question-content details { font-size: 12px; }
+.resume-textarea { font-size: 14px; }
+.resume-actions>span,.resume-disclaimer { font-size: 12px; }
+.download-button { font-size: 12px; }
+.resume-paper pre { font-size: 12px; }
+.login-aside-content p { font-size: 15px; }
+.login-aside-foot { font-size: 12px; }
+.form-container>p { font-size: 13px; }
+.input-group label { font-size: 13px; }
+.input-group input { font-size: 14px; }
+.auth-error { font-size: 13px; }
+
+@media (max-width: 1050px) {
+  .sidebar { width: 220px; }
+  .main-area { margin-left: 220px; }
+  .content-wrap { width: calc(100% - 48px); }
+  .topbar { padding-inline: 24px; }
+}
+@media (max-width: 760px) {
+  .sidebar { position: sticky; top: 0; width: 100%; height: auto; padding: 10px 14px 8px; flex-direction: column; align-items: stretch; gap: 8px; }
+  .sidebar nav { margin: 0; display: flex; gap: 5px; overflow-x: auto; scrollbar-width: thin; padding-bottom: 2px; }
+  .nav-link { flex: 0 0 auto; width: auto; min-height: 40px; height: auto; padding: 0 10px; gap: 7px; font-size: 12px; white-space: nowrap; }
+  .nav-icon { font-size: 16px; }
+  .nav-count { font-size: 10px; }
+  .main-area { margin-left: 0; min-width: 0; }
+  .topbar { min-height: 54px; height: auto; padding: 10px 16px; gap: 10px; }
+  .breadcrumb { font-size: 12px; }
+  .top-actions { gap: 12px; }
+  .content-wrap { width: min(100% - 32px, 680px); padding: 24px 0; }
+  .welcome-row { align-items: flex-start; min-height: 0; }
+  .welcome-row h1,.page-heading h1 { font-size: clamp(28px, 7vw, 36px); }
+  .welcome-art { flex: 0 0 180px; width: 180px; transform: scale(.8); transform-origin: top right; margin-left: -20px; }
+  .overview-grid,.analysis-columns,.resume-grid { grid-template-columns: 1fr; }
+  .setup-card,.snapshot-card,.skill-card,.resume-editor,.resume-preview { padding: 18px; }
+  .analysis-summary { padding: 18px; }
+  .question-card { padding: 15px; }
+  .site-footer { padding: 12px 16px; }
+  .login-page { grid-template-columns: 1fr; }
+  .login-aside { display: none; }
+  .auth-side { min-height: 100svh; padding: 20px; }
+}
+@media (max-width: 480px) {
+  .brand { font-size: 17px; }
+  .sidebar { padding-inline: 12px; }
+  .nav-link { padding-inline: 9px; font-size: 11px; }
+  .topbar { align-items: flex-start; flex-direction: column; }
+  .top-actions { width: 100%; justify-content: flex-end; }
+  .content-wrap { width: calc(100% - 28px); padding-top: 20px; }
+  .welcome-row { margin-bottom: 18px; }
+  .welcome-art { display: none; }
+  .welcome-copy,.page-heading>p { font-size: 14px; }
+  .section-top { gap: 10px; }
+  .field-label { display: block; line-height: 1.5; }
+  .field-label span { display: block; margin-top: 3px; }
+  .upload-box { padding: 10px; gap: 8px; }
+  .upload-box small { overflow-wrap: anywhere; }
+  .form-footer { align-items: stretch; flex-direction: column; gap: 12px; }
+  .form-footer .primary-button { justify-content: center; }
+  .analysis-summary { align-items: flex-start; gap: 12px; }
+  .large-ring { width: 72px; height: 72px; }
+  .summary-copy h2 { font-size: 17px; }
+  .summary-copy p { font-size: 13px; }
+  .summary-tag { display: none; }
+  .run-small { position: static; margin-top: 12px; }
+  .interview-hero { align-items: flex-start; padding: 15px; }
+  .question-count { min-width: 42px; }
+  .bottom-prompt { align-items: flex-start; }
+  .bottom-prompt button { max-width: 110px; text-align: right; line-height: 1.5; }
+  .resume-actions { align-items: stretch; flex-direction: column; gap: 10px; }
+  .resume-actions .primary-button { justify-content: center; }
+  .form-container { padding: 24px 20px; }
+  .site-footer { gap: 7px 14px; }
+  .site-footer>span:nth-child(2) { order: 3; width: 100%; }
+}
+
+/* Pathfinder visual refresh: top navigation, forest palette, editorial dashboard */
+:root {
+  --ink: #172c25;
+  --muted: #697a70;
+  --green: #176b4b;
+  --line: #e1e8df;
+  --paper: #fffefa;
+  --soft: #f2f5ed;
+  color: var(--ink);
+  background: #f5f6f0;
+}
+body { background: #f5f6f0; color: var(--ink); }
+.app-shell { background: #f5f6f0; }
+.sidebar {
+  position: sticky;
+  inset: 0 0 auto;
+  width: 100%;
+  height: 76px;
+  padding: 0 clamp(20px, 5vw, 72px);
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(20px, 4vw, 56px);
+  border-right: 0;
+  border-bottom: 1px solid #e4e9e1;
+  box-shadow: 0 4px 18px #20392c08;
+  background: rgba(255,254,250,.96);
+  backdrop-filter: blur(14px);
+}
+.brand { font-size: 21px; padding: 0; }
+.brand-mark { width: 36px; height: 36px; border-radius: 12px; background: #176b4b; }
+.workspace-label,.sidebar-bottom { display: none; }
+.sidebar nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.nav-link { min-height: 42px; padding: 0 14px; border-radius: 9px; color: #617168; font-size: 13px; }
+.nav-link.selected { background: #e7f0e7; color: #176b4b; }
+.nav-link:hover { background: #f0f4ed; }
+.nav-icon { font-size: 17px; }
+.nav-lock { font-size: 11px; }
+.main-area { margin-left: 0; }
+.topbar { height: 56px; padding: 0 clamp(20px, 5vw, 72px); background: #f5f6f0; border-bottom: 1px solid #e9ece5; }
+.content-wrap { width: min(1160px, calc(100% - 64px)); padding: 30px 0 44px; }
+.welcome-row {
+  min-height: 280px;
+  margin: 0 0 28px;
+  padding: clamp(28px, 4vw, 48px);
+  overflow: hidden;
+  border-radius: 22px;
+  background: radial-gradient(circle at 80% 10%, #327a57 0, transparent 30%), linear-gradient(120deg, #153d2d 0%, #1b5039 64%, #286246 100%);
+  box-shadow: 0 16px 40px #183d2c24;
+}
+.welcome-row .eyebrow { color: #b4d4bd; }
+.welcome-row .eyebrow>span { background: #bce67b; }
+.welcome-row h1 { margin: 18px 0 13px; color: #fffefa; font-size: clamp(36px, 4vw, 50px); letter-spacing: -2px; }
+.welcome-row h1 span { color: #c4e887; }
+.welcome-copy { max-width: 470px; color: #d0dfd2; font-size: 16px; line-height: 1.65; }
+.welcome-art { flex: 0 0 310px; width: 310px; height: 220px; }
+.art-orbit { border-color: #ffffff30; }
+.art-sun { width: 66px; height: 66px; top: 55px; left: 122px; color: #c3e780; background: #ffffff18; font-size: 32px; }
+.art-spark { color: #d0eb9c; }
+.art-card { top: 112px; left: 168px; width: 116px; padding: 12px 14px; background: #fffefa; border: 0; border-radius: 12px; box-shadow: 0 12px 26px #0d261b35; }
+.art-card span,.art-card small { font-size: 9px; }
+.art-card b { font-size: 22px; color: #176b4b; }
+.overview-grid { grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: 20px; }
+.card { border: 1px solid #e4e9e1; border-radius: 16px; background: #fffefa; box-shadow: 0 6px 24px #233a2c09; }
+.setup-card,.snapshot-card { padding: 26px; }
+.section-top h2 { color: #1b3529; font-size: 21px; letter-spacing: -.5px; }
+.section-top p,.card-description { color: #718077; }
+.step-label { color: #718c78; letter-spacing: 1.1px; }
+.card-icon,.snapshot-icon { width: 38px; height: 38px; border-radius: 12px; background: #eaf1e8; color: #397b54; }
+.field-label { color: #3e5145; }
+.upload-box { min-height: 78px; padding: 12px 15px; border: 1px dashed #afc1ad; border-radius: 11px; background: #fafbf7; }
+.upload-box:hover { border-color: #54875f; background: #f1f6ed; }
+.upload-symbol { width: 38px; height: 38px; border-radius: 10px; background: #eaf1e8; color: #34784f; }
+.upload-box b { color: #344c3c; }
+.job-input,.resume-textarea { border-color: #dfe6dc; border-radius: 10px; background: #fcfcf8; }
+.primary-button { min-height: 44px; padding: 0 17px; border-radius: 9px; background: #176b4b; box-shadow: 0 5px 12px #176b4b24; }
+.primary-button:hover { background: #10583c; }
+.score-ring { background: conic-gradient(#2d8054 var(--score),#e4ebe1 0); }
+.score-ring:before { background: #fffefa; }
+.score-ring b { color: #176b4b; }
+.stat-row { padding: 15px 0; }
+.stat-check,.stat-gap { width: 30px; height: 30px; border-radius: 9px; }
+.bottom-prompt,.insight-banner { border: 1px solid #dfe8dc; border-radius: 13px; background: #eef4e9; }
+.prompt-icon { width: 36px; height: 36px; border-radius: 11px; background: #dcebd6; color: #32744c; }
+.page-heading { margin: 12px 0 26px; }
+.page-heading h1 { color: #1b3529; font-size: clamp(32px, 4vw, 44px); }
+.analysis-summary { border-radius: 16px; }
+.analysis-columns { gap: 20px; }
+.skill-card { padding: 24px; }
+.skill-tag { padding: 8px 11px; border-radius: 8px; }
+.interview-hero { padding: 24px; border-radius: 16px; }
+.interview-icon { width: 52px; height: 52px; border-radius: 15px; background: #e7f0e7; color: #34784f; }
+.question-card { padding: 20px; border-radius: 13px; }
+.resume-editor,.resume-preview { padding: 24px; border-radius: 16px; }
+.resume-paper { border-radius: 8px; background: #fffefa; }
+.login-page { background: #f5f6f0; }
+.login-aside { background: linear-gradient(145deg, #e9f0e5, #dce9da); }
+.login-aside-content h1 { color: #173c2b; }
+.form-container { border-radius: 16px; box-shadow: 0 16px 44px #253d2d10; }
+.form-container a.primary-button,
+.form-container a.primary-button:visited { color: #fff !important; }
+.form-container a.primary-button:hover { color: #fff !important; background: #10583c; }
+.input-group input { border-radius: 9px; }
+.site-footer { padding-inline: clamp(20px, 5vw, 72px); }
+@media (max-width: 900px) {
+  .sidebar { height: auto; min-height: 70px; padding: 10px 22px; flex-wrap: wrap; gap: 6px 18px; }
+  .sidebar nav { width: 100%; margin: 0; justify-content: flex-start; }
+  .nav-link { min-height: 40px; }
+  .content-wrap { width: min(100% - 40px, 720px); }
+  .overview-grid { grid-template-columns: 1fr; }
+  .welcome-row { min-height: 250px; }
+}
+@media (max-width: 600px) {
+  .sidebar { position: sticky; padding: 10px 14px 8px; gap: 8px; }
+  .sidebar nav { gap: 4px; }
+  .nav-link { flex: 0 0 auto; padding: 0 10px; font-size: 12px; }
+  .main-area { min-width: 0; }
+  .topbar { min-height: 54px; height: auto; padding: 10px 16px; }
+  .content-wrap { width: calc(100% - 28px); padding: 18px 0 30px; }
+  .welcome-row { min-height: 0; padding: 27px 22px; border-radius: 17px; }
+  .welcome-row h1 { font-size: 36px; }
+  .welcome-art { display: none; }
+  .overview-grid { gap: 14px; }
+  .setup-card,.snapshot-card,.skill-card,.resume-editor,.resume-preview { padding: 18px; }
+  .page-heading h1 { font-size: 32px; }
+  .card { border-radius: 13px; }
+  .site-footer { padding: 14px; }
+}
