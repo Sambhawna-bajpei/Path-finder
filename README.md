@@ -12,7 +12,7 @@ Pathfinder is a career-preparation workspace for comparing a resume with a job d
 - Per-account analysis history stored in MongoDB; resume and job text are kept in that account's browser workspace and in the saved analysis record.
 - Per-account job application tracker with company, role, location, job link, status, match score, and saved resume drafts.
 - Named resume versions stored with each tracked application, with one-click restore to any earlier draft.
-- OpenAI-powered role analysis, interview questions, and resume drafting when `OPENAI_API_KEY` is set. Otherwise a clearly labeled local baseline is used.
+- Gemini-powered role analysis, interview questions, and resume drafting when `GEMINI_API_KEY` is set. Otherwise a clearly labeled local baseline is used.
 
 ## Run locally
 
@@ -38,7 +38,7 @@ Requirements: Node.js 18+, npm, and a reachable MongoDB instance for the account
 
 3. Visit `http://localhost:5173`. The API health endpoint is `http://localhost:3000/api/health`.
 
-After signing in, upload a resume and a job description to run the workflow. Scanned/image-only PDFs need OCR and should be converted to text before uploading. Without an OpenAI key, skill matching uses a transparent keyword baseline. Results are guidance, not a hiring decision; review the resume draft for accuracy.
+After signing in, upload a resume and a job description to run the workflow. Scanned/image-only PDFs need OCR and should be converted to text before uploading. Without a Gemini key, skill matching uses a transparent keyword baseline. Results are guidance, not a hiring decision; review the resume draft for accuracy.
 
 ## API
 
@@ -56,5 +56,4 @@ The health endpoint runs without MongoDB. The account workflow, analysis, histor
 
 ## Configuration
 
-`Backend/.env.example` lists the server settings. Add `OPENAI_API_KEY` to enable AI generation; the API key stays on the backend. Set `VITE_API_URL` in a frontend `.env` only if the API is hosted somewhere other than `http://localhost:3000`.
-
+`Backend/.env.example` lists the server settings. Pathfinder uses Gemini for AI generation; keep `GEMINI_API_KEY` in the backend environment file. Set `VITE_API_URL` in a frontend `.env` only if the API is hosted somewhere other than `http://localhost:3000`.

@@ -22,25 +22,77 @@ function makeQuestions(matched, missing) {
     ];
 }
 
-async function generateWithAI(resumeText, jobDescription) {
-    if (!process.env.OPENAI_API_KEY) return null;
-    const response = await fetch(process.env.OPENAI_BASE_URL || "https://api.openai.com/v1/chat/completions", {
+function getGeminiConfig() {
+    return {
+        apiKey: process.env.GEMINI_API_KEY,
+        model: process.env.GEMINI_MODEL || "gemini-3.1-flash-lite",
+        fallbackModel: process.env.GEMINI_FALLBACK_MODEL || "gemini-3.5-flash-lite"
+    };
+}
+
+async function generateWithGemini(resumeText, jobDescription, aiConfig) {
+    if (!aiConfig.apiKey) return null;
+    const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
+        headers: { "Content-Type": "application/json", "x-goog-api-key": aiConfig.apiKey },
         body: JSON.stringify({
-            model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-            temperature: 0.4,
-            response_format: { type: "json_object" },
-            messages: [
-                { role: "system", content: "You are a careful career coach. Compare the resume to the job description. Never invent experience, credentials, metrics, or skills. Return valid JSON with keys score (integer 0-100), matched (string array), missing (string array), questions (exactly 5 role-specific interview questions), and resume (a polished ATS-friendly plain-text resume tailored to the role using only truthful source details; do not present missing skills as possessed skills)." },
-                { role: "user", content: `RESUME:\n${resumeText}\n\nJOB DESCRIPTION:\n${jobDescription}` }
-            ]
-        }),
-        signal: AbortSignal.timeout(20000)
-    });
-    if (!response.ok) throw new Error(`AI provider returned ${response.status}`);
+            systemInstruction: { parts: [{ text: "You are a careful career coach. Compare the resume to the job description. Never invent experience, credentials, metrics, or skills. Return JSON with score (integer 0-100), matched (string array), missing (string array), questions (exactly 5 role-specific interview questions), and resume (a polished ATS-friendly plain-text resume tailored to the role using only truthful source details; do not present missing skills as possessed skills)." }] },
+            contents: [{ role: "user", parts: [{ text: `RESUME:\n${resumeText}\n\nJOB DESCRIPTION:\n${jobDescription}` }] }],
+            generationConfig: {
+                temperature: 0.4,
+                responseFormat: {
+                    text: {
+                        mimeType: "APPLICATION_JSON",
+                        schema: {
+                            type: "object",
+                            properties: {
+                                score: { type: "integer" },
+                                matched: { type: "array", items: { type: "string" } },
+                                missing: { type: "array", items: { type: "string" } },
+                                questions: { type: "array", items: { type: "string" } },
+                                resume: { type: "string" }
+                            },
+                            required: ["score", "matched", "missing", "questions", "resume"]
+                        }
+                    }
+                }
+            }
+        })
+    };
+    let response;
+    let usedModel = aiConfig.model;
+    let requestTimeout;
+    const models = [...new Set([aiConfig.model, aiConfig.fallbackModel].filter(Boolean))];
+    for (const model of models) {
+        usedModel = model;
+        response = undefined;
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+            try {
+                response = await fetch(endpoint, { ...requestOptions, signal: AbortSignal.timeout(45000) });
+                requestTimeout = null;
+            } catch (error) {
+                if (error.name !== "AbortError" && error.name !== "TimeoutError") throw error;
+                requestTimeout = error;
+                break;
+            }
+            if (response.status !== 503 || attempt === 2) break;
+            await new Promise((resolve) => setTimeout(resolve, 1000 * (attempt + 1)));
+        }
+        if (response && response.status !== 503) break;
+    }
+    if (!response && requestTimeout) {
+        throw new Error(`Gemini request timed out for ${usedModel} after 45 seconds`);
+    }
+    if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        const providerMessage = errorBody?.error?.message;
+        const detail = typeof providerMessage === "string" ? `: ${providerMessage.slice(0, 500)}` : "";
+        throw new Error(`Gemini API (${usedModel}) returned ${response.status}${detail}`);
+    }
     const body = await response.json();
-    const value = JSON.parse(body.choices?.[0]?.message?.content || "{}");
+    const generatedText = body.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("") || "{}";
+    const value = JSON.parse(generatedText);
     if (!Number.isFinite(Number(value.score)) || !Array.isArray(value.matched) || !Array.isArray(value.missing) || !Array.isArray(value.questions) || typeof value.resume !== "string") {
         throw new Error("AI response did not match the expected format");
     }
@@ -71,9 +123,10 @@ async function analyzeResumeController(req, res) {
     const missing = SKILLS.filter((skill) => target.includes(skill.toLowerCase()) && !source.includes(skill.toLowerCase()));
     const score = Math.min(98, Math.max(24, Math.round(46 + (matched.length / Math.max(matched.length + missing.length, 1)) * 54)));
     let result = { score, matched, missing, questions: makeQuestions(matched, missing), resume: buildResume(resumeText, missing), generatedBy: "baseline" };
-    if (process.env.OPENAI_API_KEY) {
-        try { result = await generateWithAI(resumeText, jobDescription); }
-        catch (error) { console.error("AI analysis unavailable; using local baseline:", error.message); }
+    const aiConfig = getGeminiConfig();
+    if (aiConfig.apiKey) {
+        try { result = await generateWithGemini(resumeText, jobDescription, aiConfig); }
+        catch (error) { console.error("Gemini analysis unavailable; using local baseline:", error.message); }
     }
     if (req.user) {
         const analysis = await analysisModel.create({ user: req.user.id, resumeText, jobDescription, result });
