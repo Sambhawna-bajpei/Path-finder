@@ -242,3 +242,56 @@ body { background: #f5f6f0; color: var(--ink); }
   .card { border-radius: 13px; }
   .site-footer { padding: 14px; }
 }
+
+.application-create { padding: 24px; margin-bottom: 28px; }
+.application-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin-top: 22px; }
+.application-form-grid label { display: grid; gap: 7px; color: #45594a; font-size: 13px; font-weight: 600; }
+.application-form-grid input,.application-form-grid select,.version-save-form input,.status-control select { min-width: 0; height: 43px; padding: 0 12px; border: 1px solid #dfe6dc; border-radius: 9px; background: #fcfcf8; color: #263b2e; font: inherit; font-size: 14px; }
+.application-list-heading { display: flex; align-items: end; justify-content: space-between; margin: 12px 0 14px; }
+.application-list-heading h2 { margin: 7px 0 0; color: #1b3529; font: 700 22px Manrope,sans-serif; }
+.application-list { display: grid; gap: 13px; }
+.application-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 19px 22px; }
+.application-card-main { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.application-company-mark,.version-marker { display: grid; place-items: center; flex: 0 0 auto; width: 44px; height: 44px; border-radius: 13px; background: #e8f0e5; color: #28744d; font: 700 18px Manrope,sans-serif; }
+.application-card-title { min-width: 0; }
+.application-card-title h3 { margin: 0 0 4px; color: #1d3528; font: 700 17px Manrope,sans-serif; }
+.application-card-title p { margin: 0 0 6px; color: #5f7165; font-size: 13px; }
+.application-card-title small { color: #819086; font-size: 12px; }
+.application-card-actions { display: flex; align-items: center; justify-content: flex-end; gap: 9px; flex-wrap: wrap; }
+.status-control { display: grid; gap: 4px; color: #718077; font-size: 10px; }
+.status-control select { height: 37px; padding: 0 9px; }
+.application-card-actions .primary-button { min-height: 38px; font-size: 12px; }
+.application-delete { border: 0; background: none; color: #9d6862; font-size: 12px; }
+.application-empty { padding: 40px 20px; text-align: center; }
+.application-empty>span { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: 15px; background: #e8f0e5; color: #28744d; font-size: 23px; }
+.application-empty h3 { margin: 13px 0 6px; color: #1d3528; font: 700 19px Manrope,sans-serif; }
+.application-empty p { margin: 0; color: #718077; font-size: 14px; }
+.resume-draft-editor { width: 100%; min-height: 360px; padding: 0; border: 0; outline: 0; resize: vertical; background: transparent; color: #4e554e; font: 13px/1.8 Georgia,serif; }
+.resume-draft-editor:focus-visible { outline: 2px solid #8dad91; outline-offset: 5px; }
+.version-manager { margin-top: 22px; padding-top: 20px; border-top: 1px solid #e8ece5; }
+.version-manager .section-top h2 { font-size: 16px; }
+.version-save-form { display: flex; gap: 9px; margin: 14px 0; }
+.version-save-form input { flex: 1; }
+.version-save-form .primary-button { min-height: 42px; white-space: nowrap; }
+.version-list { display: grid; }
+.version-row { display: flex; align-items: center; gap: 11px; padding: 12px 0; border-bottom: 1px solid #eef1eb; }
+.version-marker { width: 34px; height: 34px; border-radius: 10px; font-size: 14px; }
+.version-row>div { flex: 1; min-width: 0; }
+.version-row b,.version-row small { display: block; }
+.version-row b { overflow: hidden; color: #35483a; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.version-row small { margin-top: 3px; color: #87948b; font-size: 11px; }
+.current-version { padding: 5px 8px; border-radius: 99px; background: #eaf2e8; color: #34744a; font-size: 11px; }
+.inline-action { padding: 0; border: 0; background: none; color: #176b4b; font: inherit; text-decoration: underline; cursor: pointer; }
+@media (max-width: 760px) {
+  .application-card { align-items: flex-start; flex-direction: column; }
+  .application-card-actions { width: 100%; justify-content: flex-start; }
+}
+@media (max-width: 520px) {
+  .application-create { padding: 18px; }
+  .application-form-grid { grid-template-columns: 1fr; }
+  .application-card { padding: 17px; }
+  .application-card-actions { align-items: stretch; }
+  .application-card-actions .status-control { min-width: 100%; }
+  .version-save-form { align-items: stretch; flex-direction: column; }
+  .version-row { gap: 8px; }
+}

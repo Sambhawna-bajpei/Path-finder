@@ -10,6 +10,8 @@ Pathfinder is a career-preparation workspace for comparing a resume with a job d
 - Editable resume source and downloadable tailored `.txt` draft.
 - Account-first workflow: register or sign in, add a resume and job description, review skill gaps, practice interview questions, then download a tailored resume draft.
 - Per-account analysis history stored in MongoDB; resume and job text are kept in that account's browser workspace and in the saved analysis record.
+- Per-account job application tracker with company, role, location, job link, status, match score, and saved resume drafts.
+- Named resume versions stored with each tracked application, with one-click restore to any earlier draft.
 - OpenAI-powered role analysis, interview questions, and resume drafting when `OPENAI_API_KEY` is set. Otherwise a clearly labeled local baseline is used.
 
 ## Run locally
@@ -45,8 +47,12 @@ After signing in, upload a resume and a job description to run the workflow. Sca
 - `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/get-me` — account/session endpoints.
 - `POST /api/workspace/analyze` — authenticated role analysis; saves the result to the signed-in account.
 - `GET /api/workspace/history`, `GET /api/workspace/history/:id`, `DELETE /api/workspace/history/:id` — authenticated, account-scoped analysis history.
+- `GET`, `POST /api/workspace/applications` — list or create account-scoped job applications.
+- `GET`, `PATCH`, `DELETE /api/workspace/applications/:id` — read, update status/details, or delete an application.
+- `POST /api/workspace/applications/:id/versions` — save a named resume snapshot.
+- `PATCH /api/workspace/applications/:id/versions/:versionId/activate` — restore a saved resume snapshot as the current draft.
 
-The health endpoint runs without MongoDB. The account workflow, analysis, and history require MongoDB.
+The health endpoint runs without MongoDB. The account workflow, analysis, history, application tracker, and resume versions require MongoDB.
 
 ## Configuration
 
