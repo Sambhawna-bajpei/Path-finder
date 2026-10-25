@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: pathfinder
+    runtime: node
+    plan: free
+    buildCommand: npm --prefix Backend ci
+    startCommand: npm --prefix Backend start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGO_URI
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

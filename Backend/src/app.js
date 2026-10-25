@@ -4,14 +4,20 @@ const cors = require("cors")
 
 
 const app = express();
+// Render and other reverse proxies terminate TLS before forwarding to Node.
+app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
 const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173").split(",").map((origin) => origin.trim());
-app.use(cors({
-    origin: (origin, callback) => !origin || allowedOrigins.includes(origin) ? callback(null, true) : callback(new Error("Origin is not allowed by CORS")),
-    credentials: true
-}))
+app.use((req, res, next) => {
+    const requestOrigin = req.get("origin");
+    const sameOrigin = requestOrigin && requestOrigin === `${req.protocol}://${req.get("host")}`;
+    cors({
+        origin: (origin, callback) => !origin || sameOrigin || allowedOrigins.includes(origin) ? callback(null, true) : callback(new Error("Origin is not allowed by CORS")),
+        credentials: true
+    })(req, res, next);
+});
 
 const authRouter = require("./routes/auth.routes");
 const workspaceRouter = require("./routes/workspace.routes");
