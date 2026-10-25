@@ -60,7 +60,7 @@ Deploy the React frontend to Vercel and the API to Render. Vercel proxies `/api`
 
 1. Push this repository to GitHub and create a MongoDB Atlas database. Add a database user and allow network access from Render (Atlas network access settings must permit the service to connect).
 2. In Render, choose **New → Blueprint**, connect the repository, and apply `render.yaml`. Set `MONGO_URI` to the Atlas connection string. Add `GEMINI_API_KEY` if you want AI-generated analysis; without it, the app uses its local baseline. Render generates `JWT_SECRET` and supplies `PORT`.
-3. In Vercel, import the same repository and set the project root to `Frontend`. The API rewrite in `Frontend/vercel.json` points to `https://pathfinder.onrender.com`; update that host if Render assigned a different service URL. Deploy and note the Vercel production origin.
+3. In Vercel, import the same repository and set the project root to `Frontend`. The API rewrite in `Frontend/vercel.json` must point to the Render service URL. Deploy and note the Vercel production origin.
 4. In Render, set `FRONTEND_URL` to the Vercel production origin (for example, `https://your-app.vercel.app`, without a trailing slash) and redeploy. Check `/api/health` and `/api/ready` through the Vercel domain; readiness should report `connected` before using account features.
 
 Render generates `JWT_SECRET` and supplies `PORT`. Keep the Atlas connection string and Gemini key in Render's environment settings, not in source control. The free Render service may sleep when idle, so its first request after inactivity can take longer.
